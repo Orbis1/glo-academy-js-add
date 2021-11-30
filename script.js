@@ -1,46 +1,21 @@
-const isEn = 1;
-const lang = isEn ? "en" : "ru";
+// Создайте функцию, которая принимает 1 аргумент (название произвольное)
+// — Если в качестве аргумента передана не строка - функция оповещает об этом пользователя
+// — В полученной (как аргумент) строке функция должна убрать все пробелы в начале и в конце
+// — Если строка более 30 знаков - то после 30го символа часть текста скрывается и вместо них появляются три точки (...)
 
-const arr = new Map([
-    ["en", "Mo Tu We Th Fr Sa Su"],
-    ["ru", "Пн Вт Ср Чт Пт Сб Вс"],
-]);
-
-/*
-Написать условия при котором в зависимости от значения lang будут выводится дни недели на русском или английском языке. Решите задачу
-*/
-// a) через if,
-if (lang === "en") console.log(arr.get("en"));
-if (lang === "ru") console.log(arr.get("ru"));
-
-//  b) через switch-case
-switch (lang) {
-    case "en":
-        console.log("Mo Tu We Th Fr Sa Su");
-        break;
-    case "ru":
-        console.log("Пн Вт Ср Чт Пт Сб Вс");
-        break;
-    default:
-        break;
-}
-//  c) через многомерный массив без ифов и switch.
-
-
-console.log(arr.get(lang));
-/*
-2). У нас есть переменная namePerson. Если значение этой переменной “Артем” то вывести в консоль “директор”, если значение “Александр” то вывести в консоль “преподаватель”, с любым другим значением вывести в консоль “студент”
-
- Решить задачу с помощью нескольких тернарных операторов, без использования if или switch
-*/
-
-const rang = namePerson => {
-     return namePerson === "Артем" ? "“директор”" : 
-        namePerson === "Александр" ? "“преподаватель”" : "“студент”";
+const print = (str) => {
+    if(typeof str === 'string') {
+        const tail = str.length > 30 ? '...' : '';
+        return str.trim().slice(0,30) + tail;
+    } else {
+        console.log('Это не строка'); // можно alert но мне не удобно
+    }
 }
 
-["Артем", "Александр", "Дмитрий"].forEach(name => console.log(rang(name)));
+const checkAnswer = (exp, ans) => {
+    console.log(exp, exp === ans)
+}
 
-/*
-3). Запушить проект в репозиторий для усложненных заданий на GitHub
-*/
+checkAnswer(print(' строка '), 'строка');
+checkAnswer(print(' 0123456789abcdefghijklmnopqrstuvwxyz '), '0123456789abcdefghijklmnopqrst...');
+checkAnswer(print(123), undefined);
