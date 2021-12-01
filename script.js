@@ -1,21 +1,31 @@
-// Создайте функцию, которая принимает 1 аргумент (название произвольное)
-// — Если в качестве аргумента передана не строка - функция оповещает об этом пользователя
-// — В полученной (как аргумент) строке функция должна убрать все пробелы в начале и в конце
-// — Если строка более 30 знаков - то после 30го символа часть текста скрывается и вместо них появляются три точки (...)
+// 1) Создать массив arr = []
+// — Записать в него 7 любых многозначных чисел в виде строк
+// — Вывести в консоль только те, что начинаются с цифры 2 или 4 (Должны присутствовать в массиве)
+// 2) Вывести в столбик все простые числа от 1 до 100 (сделать при помощи цикла)
+// — Статья про простые числа - КЛИК
+// — Рядом с каждым числом написать оба делителя данного числа
+//     Например: “Делители этого числа: 1 и n”
 
-const print = (str) => {
-    if(typeof str === 'string') {
-        const tail = str.length > 30 ? '...' : '';
-        return str.trim().slice(0,30) + tail;
-    } else {
-        console.log('Это не строка'); // можно alert но мне не удобно
+const fillArray = n => {
+    const arr = new Array(n);
+    for (let i = 0; i < n; i++) {
+        arr.push(`${Math.floor(Math.random() * 100)}`);
     }
-}
+    return arr;
+};
 
 const checkAnswer = (exp, ans) => {
-    console.log(exp, exp === ans)
-}
+    console.log(exp, exp === ans);
+};
 
-checkAnswer(print(' строка '), 'строка');
-checkAnswer(print(' 0123456789abcdefghijklmnopqrstuvwxyz '), '0123456789abcdefghijklmnopqrst...');
-checkAnswer(print(123), undefined);
+const isPrime = num => {
+    for (let i = 2; i < num; i++) if (num % i === 0) return false;
+    return num > 1;
+};
+
+const arr = fillArray(7);
+console.log(arr.filter(item => ["2", "4"].includes(item[0])));
+
+for (let i = 1; i < 101; i++) {
+    if (isPrime(i)) console.log(i, `Делители этого числа: 1 и ${i}`);
+}
