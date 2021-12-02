@@ -2,7 +2,6 @@
 
 const START = 1, END = 100;
 const TRIES_COUNT = 5;
-let playAgain = true;
 
 const getRandomIntInclusive = function(min, max) {
   min = Math.ceil(min);
@@ -55,17 +54,28 @@ const game = secret => count => rules => {
 
   const answer = prompt(`Guess a number from ${START} to ${END}?`);
   const { msg, gameover } = rules(answer, secret, count);
+  let repeat = false;
 
   if (gameover) {
-    playAgain = msg === 'Game Over' ? false : confirm(msg);
+    if (msg === 'Game Over') {
+      repeat = false;
+    } else {
+      repeat = confirm(msg);
+    }
   } else {
     alert(msg);
-    game(secret)(--count)(rules);
+    repeat = game(secret)(--count)(rules);
   }
+
+  return repeat;
 
 };
 
-for (let i = 1; playAgain; i++) {
-  document.title = `Guesser. Round ${i}`;
-  game(getRandomIntInclusive(START, END))(TRIES_COUNT)(guesser);
-}
+const letsPlay = round => {
+  document.title = `Guesser. Round ${round}`;
+  const secret = getRandomIntInclusive(START, END);
+  const playAgain = game(secret)(TRIES_COUNT)(guesser);
+  if (playAgain) letsPlay(++round)();
+};
+
+letsPlay(1);
