@@ -1,31 +1,58 @@
-// 1) Создать массив arr = []
-// — Записать в него 7 любых многозначных чисел в виде строк
-// — Вывести в консоль только те, что начинаются с цифры 2 или 4 (Должны присутствовать в массиве)
-// 2) Вывести в столбик все простые числа от 1 до 100 (сделать при помощи цикла)
-// — Статья про простые числа - КЛИК
-// — Рядом с каждым числом написать оба делителя данного числа
-//     Например: “Делители этого числа: 1 и n”
+'use strict';
 
-const fillArray = n => {
-    const arr = new Array(n);
-    for (let i = 0; i < n; i++) {
-        arr.push(`${Math.floor(Math.random() * 100)}`);
+const START = 1, END = 100;
+
+const getRandomIntInclusive = function(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() *
+   (max - min + 1)) + min; //Максимум и минимум включаются
+};
+
+const secret = getRandomIntInclusive(START, END);
+console.log(secret);
+
+const dialog = function(num) {
+
+  const answer = prompt(`Guess a number from ${START} to ${END}?`);
+
+  const responseTo = function(ans) {
+    switch (true) {
+    case ans === null:
+      return { msg: 'Game Over', gameover: true };
+    case isNaN(+ans):
+      return { msg: 'Enter the number, please', gameover: false };
+    case +ans > END || +ans < START:
+      return {
+        msg: `The number must be in the range from ${START} to ${END}`,
+        gameover: false
+      };
+    case +ans > num:
+      return {
+        msg: `The secret number is less then ${ans}`,
+        gameover: false
+      };
+    case +ans < num:
+      return {
+        msg: `The secret number is greater then ${ans}`,
+        gameover: false
+      };
+    case +ans === num:
+      return {
+        msg: `You guessed! It is ${ans}`,
+        gameover: true
+      };
+    default:
+      return {
+        msg: `You entered ${ans}. Please try again!`,
+        gameover: true
+      };
     }
-    return arr;
+  };
+
+  const { msg, gameover } = responseTo(answer);
+  alert(msg);
+  if (!gameover) dialog(num);
 };
 
-const checkAnswer = (exp, ans) => {
-    console.log(exp, exp === ans);
-};
-
-const isPrime = num => {
-    for (let i = 2; i < num; i++) if (num % i === 0) return false;
-    return num > 1;
-};
-
-const arr = fillArray(7);
-console.log(arr.filter(item => ["2", "4"].includes(item[0])));
-
-for (let i = 1; i < 101; i++) {
-    if (isPrime(i)) console.log(i, `Делители этого числа: 1 и ${i}`);
-}
+dialog(secret);
