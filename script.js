@@ -75,7 +75,7 @@ const letsPlay = round => {
   document.title = `Guesser. Round ${round}`;
   const secret = getRandomIntInclusive(START, END);
   const playAgain = game(secret)(TRIES_COUNT)(guesser);
-  if (playAgain) letsPlay(++round)();
+  if (playAgain) letsPlay(++round);
 };
 
 letsPlay(1);
