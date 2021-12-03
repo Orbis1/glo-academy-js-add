@@ -30,8 +30,10 @@ const days = week.map(day => {
 
 const renderList = () => {
   const list = days.map(({ isToday, dayName }) => {
+    const nonBulletStyle = 'list-style-type: none;';
+    const boldStyle = 'font-weight: bold;';
     const listItem = `
-      <li ${isToday ? 'style = "font-weight: bold;"' : ''}>
+      <li style = "${isToday ? boldStyle : nonBulletStyle}">
         ${dayName}
       </li>`;
     return listItem;
